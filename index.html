@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SheetSnap — screenshot to spreadsheet</title>
+  <meta name="description" content="Turn a screenshot of a table into an Excel or CSV file. Free, runs entirely in your browser, nothing is uploaded.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📸</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="./"><span class="logo">📸</span> SheetSnap</a>
+    <a class="gh" href="https://github.com/econnx/sheetsnap" target="_blank" rel="noopener">GitHub ↗</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Screenshot <span class="arrow">→</span> <span class="grad">spreadsheet</span></h1>
+      <p class="sub">Drop a picture of any table and get an editable Excel or CSV file in seconds.
+        Free, no sign-up, and <b>nothing leaves your browser</b>.</p>
+    </section>
+
+    <section id="drop" class="drop" tabindex="0">
+      <input id="file" type="file" accept="image/*" hidden>
+      <div class="drop-inner">
+        <div class="drop-icon">⬆</div>
+        <div class="drop-title">Drop an image, <u>browse</u>, or press <kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>V</kbd></div>
+        <div class="drop-hint">PNG, JPG, WEBP · screenshots of Excel, Google Sheets, websites, PDFs</div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <label>Text language
+        <select id="lang">
+          <option value="eng">English</option>
+          <option value="eng+ukr" selected>English + Українська</option>
+          <option value="eng+rus">English + Русский</option>
+        </select>
+      </label>
+      <button id="sample" class="ghost">Try a sample</button>
+    </div>
+
+    <section id="progress" class="progress" hidden>
+      <div class="bar"><div id="barFill"></div></div>
+      <div id="status">Starting…</div>
+    </section>
+
+    <section id="result" class="result" hidden>
+      <div class="result-head">
+        <div>
+          <h2>Your table</h2>
+          <p class="muted" id="summary"></p>
+        </div>
+        <div class="actions">
+          <button id="xlsx" class="primary">Download .xlsx</button>
+          <button id="csv">.csv</button>
+          <button id="copy">Copy</button>
+        </div>
+      </div>
+      <p class="tip"><span class="swatch"></span> Highlighted cells were hard to read — check them. Click any cell to edit.</p>
+      <div class="panes">
+        <figure class="preview"><img id="previewImg" alt="Uploaded image"></figure>
+        <div class="table-wrap"><table id="grid"></table></div>
+      </div>
+      <div class="row-actions">
+        <button id="addRow" class="ghost">+ Row</button>
+        <button id="addCol" class="ghost">+ Column</button>
+        <button id="headerRow" class="ghost">First row is header ✓</button>
+      </div>
+    </section>
+
+    <section class="how">
+      <div><b>1. Snap</b><span>Take a screenshot of a table — from a PDF, a website, a photo of a printout.</span></div>
+      <div><b>2. Read</b><span>Text recognition (Tesseract) runs locally, then columns are rebuilt from word positions.</span></div>
+      <div><b>3. Export</b><span>Fix anything highlighted and download a real spreadsheet with numbers as numbers.</span></div>
+    </section>
+  </main>
+
+  <footer>
+    Open source · runs 100% in your browser · built by <a href="https://x.com/Econnx1" target="_blank" rel="noopener">@Econnx1</a>
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="table.js"></script>
+  <script src="preprocess.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
